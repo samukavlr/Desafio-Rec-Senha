@@ -20,7 +20,12 @@ const Users = db.define('users-desafio',{
     password: {
         type:Sequelize.STRING,
         aloowNull:false
+    },
+    verificationCode: {
+        type:Sequelize.INTEGER,
+        aloowNull:false
     }
+    
 })
 
 /////crear tabela com Sequelize/////

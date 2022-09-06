@@ -72,24 +72,7 @@ exports.findAll = async(req,res)=>{
     })
   })
 }
-/////////////// Alterar//////////////
-// exports.update = async(req,res)=>{
-//   const {id} = req.body;
 
-//   await Users.update(req.body, {where: {id}})
-//   .then(()=>{
-//     return res.json({
-//       erro: false,
-//       mensagem: "Usuário alterado com sucesso!"
-//     })
-//   }).catch((err)=>{
-//     return res.status(400).json({
-//       erro: true,
-//       mensagem: `Erro: Usuário não encontrado ...${err}`
-//     })
-//   })
-// }
-///////////////// Mostrar 1//////////////
 exports.findOne = async (req, res) =>{
   const {id} = req.params;
   try{
@@ -126,31 +109,5 @@ exports.delete =  async(req,res)=>{
       erro: true,
       mensagem: `Erro: ${err} Usuário não apagado...`
     })
-  })
-}
-///////////////// Trocar senha//////////////
-exports.changepass =  async (req, res) => {
-  const {id, password } = req.body;
-  var senhaCrypt = await bcrypt.hash(password, 8);
-  const users = await Users.findByPk(id);
-  if(!users){
-    return res.status(400).json({
-      erro: true,
-      mensagem: "Erro: Nenhum usuário encontrado!"
-    })
-  }
-
-  await Users.update({password: senhaCrypt }, {where: {id: id}})
-  .then(() => {
-     ;
-      return res.json({
-          erro: false,
-          mensagem: "Senha edita com sucesso!"
-      }); 
-  }).catch( (err) => {
-      return res.status(400).json({
-          erro: true,
-          mensagem: `Erro: ${err}... A senha não foi alterada!!!`
-      })
   })
 }
