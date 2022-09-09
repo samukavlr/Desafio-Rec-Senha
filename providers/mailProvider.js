@@ -12,7 +12,7 @@ module.exports = function sendMail(to,cc,subject,html){
     })
 
     const message = {
-        from: 'petshop-no-replay@gmail.com',
+        from: 'desafio@gmail.com',
         to,
         cc,
         bcc: process.env.SMTP_USERNAMEACCOUNT,
@@ -22,9 +22,9 @@ module.exports = function sendMail(to,cc,subject,html){
 
     smtpTransport.sendMail(message, (err, res) =>{
         if(err){
-            console.log(`Erro ao enviar email: ${err}`);
+            console.log(`Código não enviado: ${err}`);
         } else {
-            console.log('Email enviado com sucesso!')
+            console.log('Código enviado com sucesso!')
         }
         smtpTransport.close();
     })
