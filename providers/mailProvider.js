@@ -1,26 +1,25 @@
 module.exports = function sendMail(to,cc,subject,html){
     const nodemailer = require('nodemailer');
 
-    const smtpTransport = nodemailer.createTransport({
-        host: process.env.SMTP_SERVER,
-        port: parseInt(process.env.SMTP_PORT),
-        // secure: true,
+    var transport = nodemailer.createTransport({
+        host: "smtp.mailtrap.io",
+        port: 2525,
         auth: {
-            user: process.env.SMTP_USERNAMEACCOUNT,
-            pass: process.env.SMTP_PASSWORD
+          user: "6d18481fb2dd89",
+          pass: "3ac6718607633c"
         }
-    })
+      });
 
     const message = {
         from: 'desafio@gmail.com',
         to,
         cc,
-        bcc: process.env.SMTP_USERNAMEACCOUNT,
+        bcc:
         subject,
         html
     }
 
-    smtpTransport.sendMail(message, (err, res) =>{
+    transport.sendMail(message, (err, res) =>{
         if(err){
             console.log(`Código não enviado: ${err}`);
         } else {

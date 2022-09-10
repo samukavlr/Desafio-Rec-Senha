@@ -13,12 +13,11 @@ exports.userCreateMailTemplate= (data) =>{
         htmlbody += 'Seu login é o seu email: {email}';
         htmlbody += '</p>';
         htmlbody += '<p style="color:#fff;margin-top:50px;">';
-        htmlbody += 'Sexo: {gender}';
         htmlbody += '</p>';
         htmlbody += '</div>';
         htmlbody += '</div>';
         htmlbody = htmlbody.replace('{name}', name);
         htmlbody = htmlbody.replace('{email}', email);
-        htmlbody = htmlbody.replace('{email}', email);
+        
    
 }
