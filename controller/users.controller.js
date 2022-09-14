@@ -1,6 +1,8 @@
 const Users = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const sendMail = require('../providers/mailProvider')
+const app = require('express')
 
 
 ///////////////// crirar//////////////
@@ -15,6 +17,8 @@ exports.create =  async(req, res) =>{
       erro: false,
       mensagem: 'Usuário cadastrado com sucesso!'
     });
+    sendMail()
+
   }).catch((err)=>{
     return res.status(400).json({
       erro:true,
@@ -60,10 +64,10 @@ exports.findAll = async(req,res)=>{
     order: [['id', 'ASC']]
 
   })
-  .then((users) => {
+  .then((user) => {
     return res.json({
       erro: false,
-      users
+      user
     });
   }).catch((err) => {
     return res.status(400).json({
