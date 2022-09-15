@@ -1,13 +1,13 @@
 const usersRoutes = require('express').Router();
-const users = require('../controllers/users.controller');
-const { validaToken } = require('../middlewares/auth');
+const users = require('../controller/users.controller');
+// const { validaToken } = require('../middlewares/auth');
 
 
 usersRoutes.get("/all", users.findAll);
-usersRoutes.get("/show/:id",validaToken, users.findOne);
+// usersRoutes.get("/show/:id",validaToken, users.findOne);
 usersRoutes.post("/create", users.create);
-usersRoutes.get("/recovery ", validaToken, users.recovery);
-// usersRoutes.put("/update",validaToken, users.update);
+usersRoutes.get("/recovery ", users.recovery);
+usersRoutes.put("/update", users.update);
 // usersRoutes.delete("/delete/:id",validaToken, users.delete);
 usersRoutes.post("/login", users.login);
 

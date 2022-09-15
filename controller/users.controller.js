@@ -1,9 +1,23 @@
 const Users = require('../models/User');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const sendMail = require('../providers/mailProvider')
-const app = require('express')
 
+exports.recovery =  async(req, res) =>{
+  const email=req.body.email
+  const user = await Users.findOne({where:{email}})
+  if(!user){
+    return res.status(400).json({
+      erro:true,
+      mensagem:'usuario não encontrado'
+    })
+  }
+  else{
+    const token = (Math.random()*10).toString().substring(0,6)
+    await Users.update({
+      verificationCode:token
+    },{where:{id:user.id}})
+  }
+  
+}
 
 ///////////////// crirar//////////////
 exports.create =  async(req, res) =>{
@@ -17,7 +31,7 @@ exports.create =  async(req, res) =>{
       erro: false,
       mensagem: 'Usuário cadastrado com sucesso!'
     });
-    sendMail()
+    
 
   }).catch((err)=>{
     return res.status(400).json({
@@ -100,18 +114,34 @@ exports.findOne = async (req, res) =>{
   }
 }
 ///////////////// Deletar//////////////
-exports.delete =  async(req,res)=>{
-  const {id} = req.params;
-  await Users.destroy({where: {id}})
+// exports.delete =  async(req,res)=>{
+//   const {id} = req.params;
+//   await Users.destroy({where: {id}})
+//   .then(()=>{
+//     return res.json({
+//       erro: false,
+//       mensagem: "Usuário apagado com sucesso!"
+//     });
+//   }).catch((err)=>{
+//     return res.status(400).json({
+//       erro: true,
+//       mensagem: `Erro: ${err} Usuário não apagado...`
+//     })
+//   })
+// }
+exports.update = async(req,res)=>{
+  const {id} = req.body;
+
+  await Users.update(req.body, {where: {id}})
   .then(()=>{
     return res.json({
       erro: false,
-      mensagem: "Usuário apagado com sucesso!"
-    });
+      mensagem: "Usuário alterado com sucesso!"
+    })
   }).catch((err)=>{
     return res.status(400).json({
       erro: true,
-      mensagem: `Erro: ${err} Usuário não apagado...`
+      mensagem: `Erro: Usuário não encontrado ...${err}`
     })
   })
 }
